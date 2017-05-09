@@ -13,7 +13,21 @@ const server = http.createServer(function(req, res){
             res.writeHead(202, {
                 'Content-type': 'text/html'
             });
-            res.end(data);
+            var requestData = {
+                'url': req.url,
+                'method': req.method,
+                'httpVersion': req.httpVersion,
+                'header': req.headers
+                
+            }
+            var sendData = {
+                'status': res.statusMessage,
+                'code': res.statusCode,
+                'resHeader': res._header,
+            }
+            res.end(data
+            .replace('req',JSON.stringify(requestData, null, 2))
+            .replace('res', JSON.stringify(sendData, null, 2)));
         }
     });
 });
